@@ -3,6 +3,11 @@ pragma solidity ^0.8.0;
 
 //Creating a hotel room smart contract
 contract HotelRoom {
+    enum Statuses {
+        Vacant,
+        Occupied
+    }
+
     address payable owner;
 
     constructor() {
@@ -10,6 +15,7 @@ contract HotelRoom {
     }
 
     function book() {
-        owner.transfer(msg.value);
+        (bool sent, bytes memory data) = owner.call{msg.value}("");
+        require(sent);
     }
 }
