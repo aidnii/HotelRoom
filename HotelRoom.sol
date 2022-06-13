@@ -23,7 +23,11 @@ contract HotelRoom {
         _;
     }
 
-    function book() public payable onlyWhileVacant {
+    modifier costs(uint _amount) {
+        require(msg.value >= _amount, "Not enough ETH provided.");
+    }
+
+    function book() public payable onlyWhileVacant costs(2 ether) {
         currentStatus = Statuses.Occupied;
         (bool sent, bytes memory data) = owner.call{msg.value}("");
         require(sent);
