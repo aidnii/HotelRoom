@@ -18,7 +18,7 @@ contract HotelRoom {
         currentStatus = Statuses.Vacant;
     }
 
-    function book() payable {
+    function book() public payable {
         currentStatus = Statuses.Occupied;
         (bool sent, bytes memory data) = owner.call{msg.value}("");
         require(sent);
