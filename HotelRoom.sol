@@ -7,14 +7,17 @@ contract HotelRoom {
         Vacant,
         Occupied
     }
+    Statuses public currentStatus;
 
     address payable owner;
 
     constructor() {
         owner = msg.sender;
+        currentStatus = Statuses.Vacant;
     }
 
     function book() {
+        currentStatus = Statuses.Occupied;
         (bool sent, bytes memory data) = owner.call{msg.value}("");
         require(sent);
     }
