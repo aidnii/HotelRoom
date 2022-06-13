@@ -9,6 +9,8 @@ contract HotelRoom {
     }
     Statuses public currentStatus;
 
+    event Occupy(address _occupant, uint _value);
+
     address payable owner;
 
     constructor() {
@@ -20,5 +22,6 @@ contract HotelRoom {
         currentStatus = Statuses.Occupied;
         (bool sent, bytes memory data) = owner.call{msg.value}("");
         require(sent);
+        emit Occupy(msg.sender, msg.value);
     }
 }
